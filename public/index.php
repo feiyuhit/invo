@@ -10,7 +10,7 @@ try {
     $config = new Phalcon\Config\Adapter\Ini(__DIR__ . '/../app/config/config.ini');
 
     $loader = new \Phalcon\Loader();
-    
+
     /**
      * We're a registering a set of directories taken from the configuration file
      */
@@ -32,7 +32,7 @@ try {
      * We register the events manager
      */
     $di->set('dispatcher', function() use ($di) {
-        
+
         $eventsManager = $di->getShared('eventsManager');
 
         $security = new Security($di);
@@ -84,7 +84,7 @@ try {
 
         return $volt;
     }, true);
-    
+
     /**
      * Database connection is created based in the parameters defined in the configuration file
      */
@@ -136,13 +136,14 @@ try {
         return new Elements();
     });
 
+
     //注入服务替代控制器, 下面代码的意思即，访问IndexController将被注册到控制器AboutController中，即使控制器目录存在 IndexController，也将不再访问，
     //目前使用场景在挖掘中   
 //    $di->set('IndexController', function() {
 //        $component = new AboutController();
 //        return $component;
 //    });
-    
+
     $application = new \Phalcon\Mvc\Application();
     $application->setDI($di);
     echo $application->handle()->getContent();
